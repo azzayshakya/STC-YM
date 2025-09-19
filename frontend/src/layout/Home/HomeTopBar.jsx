@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { UserContext } from "@/context/user.context";
 import { logoutApi } from "@/apis/apiServices";
 import { toast } from "react-toastify";
@@ -8,11 +8,13 @@ export default function HomeTopBar() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileRef = useRef();
 
   const handleLogout = async () => {
     try {
       const res = await logoutApi();
-      if (res.status == true) {
+      if (res.status === true) {
         toast.success(res.message);
         localStorage.removeItem("stcUser");
         localStorage.removeItem("stcUserToken");
@@ -27,6 +29,16 @@ export default function HomeTopBar() {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setIsProfileOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <nav className="bg-navy-blue sticky top-0 z-50 shadow-md">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
@@ -34,7 +46,6 @@ export default function HomeTopBar() {
           className="flex cursor-pointer items-center space-x-2"
           onClick={() => navigate("/home")}
         >
-        
           <h1 className="text-xl font-bold text-white md:text-2xl">STC</h1>
         </div>
 
@@ -76,15 +87,39 @@ export default function HomeTopBar() {
               </button>
             </>
           ) : (
-            <button
-              className="rounded-lg bg-red-500 px-4 py-2 text-white transition-colors hover:bg-red-600"
-              onClick={handleLogout}
-            >
-              Log Out
-            </button>
+            <>
+              {/* Profile Icon */}
+              <div className="relative" ref={profileRef}>
+                <button
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  className="rounded-full bg-gray-700 p-2 text-white hover:bg-gray-600"
+                >
+                  {user.name?.[0].toUpperCase() || "U"}
+                </button>
+
+                {/* Profile Box */}
+                {isProfileOpen && (
+                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-lg bg-gray-800 p-4 text-white shadow-lg">
+                    <h3 className="text-lg font-semibold">{user.name}</h3>
+                    <p className="text-sm text-gray-300">{user.email}</p>
+                    <p className="text-sm capitalize text-gray-400">
+                      {user.role}
+                    </p>
+                    <hr className="my-2 border-gray-600" />
+                    <button
+                      onClick={handleLogout}
+                      className="w-full rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
 
+        {/* Mobile Menu */}
         <button
           className="text-white md:hidden"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -106,6 +141,7 @@ export default function HomeTopBar() {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       <div
         className={`bg-navy-blue origin-top transform space-y-4 px-4 py-4 transition-all duration-300 ease-in-out md:hidden ${
           isMobileMenuOpen
