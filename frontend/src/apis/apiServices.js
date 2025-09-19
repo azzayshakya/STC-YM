@@ -1,7 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-// const API_BASE_URL = "https://we-chat-backend-kappa.vercel.app";
 const API_BASE_URL = "http://localhost:3000";
 
 const api = axios.create({
@@ -62,62 +61,3 @@ export const logoutApi = async () => {
   }
 };
 
-export const fetchProjectsApi = async () => {
-  try {
-    const response = await api.get("/project/user-projects", authHeaders());
-    return response.data.projects;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
-
-export const createProjectApi = async (projectName) => {
-  try {
-    const response = await api.post(
-      "/project/create",
-      { name: projectName },
-      authHeaders(),
-    );
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
-
-export const getAllUsersApi = async (projectId) => {
-  try {
-    const response = await api.post(
-      "/auth/all-users-except-current",
-      { projectId },
-      authHeaders(),
-    );
-    return response.data.users;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
-
-export const addUserToProjectAPI = async ({ projectId, newUserId }) => {
-  try {
-    const response = await api.post(
-      "/project/add-user",
-      { projectId, newUserId },
-      authHeaders(),
-    );
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
-
-export const getProjectDetailsApi = async (projectId) => {
-  try {
-    const response = await api.get(
-      `/project/get-project/${projectId}`,
-      authHeaders(),
-    );
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};

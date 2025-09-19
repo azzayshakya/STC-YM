@@ -17,10 +17,16 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
-  const updateUser = (userData) => {
+const updateUser = (userData) => {
+  if (!userData) {
+    setUser(null);
+    localStorage.removeItem("stcUser");
+    localStorage.removeItem("stcUserToken");
+  } else {
     setUser(userData);
     localStorage.setItem("stcUser", JSON.stringify(userData));
-  };
+  }
+};
 
   return (
     <UserContext.Provider value={{ user, setUser: updateUser }}>

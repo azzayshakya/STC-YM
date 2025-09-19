@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useContext, useState, useRef, useEffect } from "react";
 import { UserContext } from "@/context/user.context";
-import { logoutApi } from "@/apis/apiServices";
-import { toast } from "react-toastify";
+// import { logoutApi } from "@/apis/apiServices";
+// import { toast } from "react-toastify";
 
 export default function HomeTopBar() {
   const navigate = useNavigate();
@@ -12,21 +12,12 @@ export default function HomeTopBar() {
   const profileRef = useRef();
 
   const handleLogout = async () => {
-    try {
-      const res = await logoutApi();
-      if (res.status === true) {
-        toast.success(res.message);
-        localStorage.removeItem("stcUser");
-        localStorage.removeItem("stcUserToken");
-        setUser(null);
-        navigate("/login");
-      } else {
-        toast.error(res.message || "Logout failed");
-      }
-    } catch (error) {
-      toast.error(error.message || "Something went wrong during logout.");
-      console.error("Logout error:", error);
-    }
+    localStorage.removeItem("stcUser");
+    localStorage.removeItem("stcUserToken");
+
+    setUser(null);
+
+    navigate("/login", { replace: true });
   };
 
   useEffect(() => {
@@ -108,16 +99,27 @@ export default function HomeTopBar() {
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-lg bg-gray-800 p-4 text-white shadow-lg">
-                    <h3 className="text-lg font-semibold">{user.STCuser}</h3>
-                    <p className="text-sm text-gray-300">{user.STCuserEmail}</p>
-                    <p className="text-sm capitalize text-gray-400">
-                      {user.STCuserType}
-                    </p>
-                    <hr className="my-2 border-gray-600" />
+                  <div className="absolute right-0 z-50 mt-2 w-64 rounded-xl border border-gray-200 bg-white p-4 text-gray-800 shadow-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-500 font-bold text-white">
+                        {user.STCuser?.[0].toUpperCase() || "U"}
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold">
+                          {user.STCuser}
+                        </h3>
+                        <p className="text-sm text-gray-500">
+                          {user.STCuserEmail}
+                        </p>
+                        <span className="text-xs capitalize text-gray-400">
+                          {user.STCuserType}
+                        </span>
+                      </div>
+                    </div>
+                    <hr className="my-3" />
                     <button
                       onClick={handleLogout}
-                      className="w-full rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                      className="w-full rounded-lg bg-red-500 px-4 py-2 text-sm text-white transition-colors hover:bg-red-600"
                     >
                       Log Out
                     </button>

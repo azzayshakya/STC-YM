@@ -9,25 +9,30 @@ const AssignmentsList = () => {
   if (isLoading) return <p className="text-center">Loading...</p>;
 
   return (
-    <div className="mt-6 space-y-4">
+    <div className="mx-auto mt-6 max-w-2xl space-y-4">
       {assignments?.length ? (
         assignments.map((a) => (
           <div
             key={a._id}
-            className="rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-md"
+            className="rounded-lg border border-border bg-card p-5 shadow-md"
           >
-            <h3 className="text-lg font-bold">{a.title}</h3>
-            <p className="text-sm text-gray-400">{a.description}</p>
-            <p className="text-sm">
-              <strong>Subject:</strong> {a.subject}
+            <h3 className="text-lg font-semibold text-foreground">{a.title}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {a.description}
+            </p>
+            <p className="mt-2 text-sm">
+              <strong className="font-medium">Subject:</strong> {a.subject}
             </p>
             <p className="text-sm">
-              <strong>Deadline:</strong> {a.deadline}
+              <strong className="font-medium">Deadline:</strong> {a.deadline}
+            </p>
+            <p className="mt-1 text-xs text-gray-500">
+              Teacher: {a.postedBy || "Unknown"}
             </p>
           </div>
         ))
       ) : (
-        <p>No assignments yet.</p>
+        <p className="text-center text-gray-500">No assignments yet.</p>
       )}
     </div>
   );

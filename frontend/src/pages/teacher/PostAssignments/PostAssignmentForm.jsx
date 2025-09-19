@@ -13,48 +13,54 @@ const AssignmentsPageForm = () => {
 
   const onSubmit = (data) => {
     if (!user) return;
-    submitAssignmentMutation({ ...data, postedBy: user.STCuserEmail });
+    submitAssignmentMutation({
+      ...data,
+      postedBy: user.STCuserEmail,
+      teacherName: user.username || "Unknown Teacher",
+    });
     setShowForm(false);
     form.reset();
   };
 
   return (
-    <div className="mx-auto max-w-2xl p-6 text-white">
-      <h2 className="mb-4 text-2xl font-bold">Assignments</h2>
-
-      {user?.STCuserType === "teacher" && (
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="mb-4 rounded-lg bg-blue-600 px-4 py-2 hover:bg-blue-700"
-        >
-          {showForm ? "Cancel" : "Post Assignment"}
-        </button>
-      )}
+    <div className="mx-auto max-w-2xl rounded-xl bg-card p-6 shadow-md">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-foreground">Post New Assignment</h2>
+        {user?.STCuserType === "teacher" && (
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="rounded-md bg-primary px-4 py-2 text-white transition hover:bg-purple-700"
+          >
+            {showForm ? "Cancel" : "Post Assignment"}
+          </button>
+        )}
+      </div>
 
       {showForm && (
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 rounded-lg bg-gray-800 p-4 shadow-lg"
+          className="mt-4 space-y-4"
         >
+          {/* Title */}
           <div>
-            <label className="mb-1 block text-sm">Title</label>
             <input
               type="text"
               {...form.register("title")}
-              className="w-full rounded-lg bg-gray-700 px-3 py-2"
-              placeholder="Enter title"
+              placeholder="Title"
+              className="gcl-form-control w-full rounded-md border border-border bg-input px-3 py-2 placeholder-gray-400 focus:outline-none"
             />
             {errors.title && (
               <p className="text-sm text-red-500">{errors.title.message}</p>
             )}
           </div>
 
+          {/* Description */}
           <div>
-            <label className="mb-1 block text-sm">Description</label>
             <textarea
               {...form.register("description")}
-              className="w-full rounded-lg bg-gray-700 px-3 py-2"
-              placeholder="Enter description"
+              placeholder="Description"
+              rows={3}
+              className="gcl-form-control w-full rounded-md border border-border bg-input px-3 py-2 placeholder-gray-400 focus:outline-none"
             />
             {errors.description && (
               <p className="text-sm text-red-500">
@@ -63,35 +69,36 @@ const AssignmentsPageForm = () => {
             )}
           </div>
 
+          {/* Subject */}
           <div>
-            <label className="mb-1 block text-sm">Subject</label>
             <input
               type="text"
               {...form.register("subject")}
-              className="w-full rounded-lg bg-gray-700 px-3 py-2"
-              placeholder="Enter subject"
+              placeholder="Subject"
+              className="gcl-form-control w-full rounded-md border border-border bg-input px-3 py-2 placeholder-gray-400 focus:outline-none"
             />
             {errors.subject && (
               <p className="text-sm text-red-500">{errors.subject.message}</p>
             )}
           </div>
 
+          {/* Deadline */}
           <div>
-            <label className="mb-1 block text-sm">Deadline</label>
             <input
               type="date"
               {...form.register("deadline")}
-              className="w-full rounded-lg bg-gray-700 px-3 py-2"
+              className="gcl-form-control w-full rounded-md border border-border bg-input px-3 py-2 focus:outline-none"
             />
             {errors.deadline && (
               <p className="text-sm text-red-500">{errors.deadline.message}</p>
             )}
           </div>
 
+          {/* Submit */}
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-green-600 py-2 hover:bg-green-700"
+            className="w-full rounded-md bg-blue-600 py-2 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? "Posting..." : "Post Assignment"}
           </button>
