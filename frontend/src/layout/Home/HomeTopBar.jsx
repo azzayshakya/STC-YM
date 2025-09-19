@@ -50,22 +50,13 @@ export default function HomeTopBar() {
         </div>
 
         <div className="hidden items-center space-x-6 md:flex">
-          <a
-            href="/home"
-            className="text-white transition-colors hover:text-primary"
-          >
+          <a href="/home" className="text-white transition-colors hover:text-primary">
             Home
           </a>
-          <a
-            href="/about-us"
-            className="text-white transition-colors hover:text-primary"
-          >
+          <a href="/about-us" className="text-white transition-colors hover:text-primary">
             About
           </a>
-          <a
-            href="/abc"
-            className="text-white transition-colors hover:text-primary"
-          >
+          <a href="/abc" className="text-white transition-colors hover:text-primary">
             abc
           </a>
         </div>
@@ -88,22 +79,20 @@ export default function HomeTopBar() {
             </>
           ) : (
             <>
-              {/* Profile Icon */}
               <div className="relative" ref={profileRef}>
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   className="rounded-full bg-gray-700 p-2 text-white hover:bg-gray-600"
                 >
-                  {user.name?.[0].toUpperCase() || "U"}
+                  {user.STCuser?.[0].toUpperCase() || "U"}
                 </button>
 
-                {/* Profile Box */}
                 {isProfileOpen && (
                   <div className="absolute right-0 z-50 mt-2 w-64 rounded-lg bg-gray-800 p-4 text-white shadow-lg">
-                    <h3 className="text-lg font-semibold">{user.name}</h3>
-                    <p className="text-sm text-gray-300">{user.email}</p>
+                    <h3 className="text-lg font-semibold">{user.STCuser}</h3>
+                    <p className="text-sm text-gray-300">{user.STCuserEmail}</p>
                     <p className="text-sm capitalize text-gray-400">
-                      {user.role}
+                      {user.STCuserType}
                     </p>
                     <hr className="my-2 border-gray-600" />
                     <button
@@ -119,24 +108,15 @@ export default function HomeTopBar() {
           )}
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Button */}
         <button
           className="text-white md:hidden"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" className="h-6 w-6">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+              d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
       </div>
@@ -144,27 +124,16 @@ export default function HomeTopBar() {
       {/* Mobile Menu */}
       <div
         className={`bg-navy-blue origin-top transform space-y-4 px-4 py-4 transition-all duration-300 ease-in-out md:hidden ${
-          isMobileMenuOpen
-            ? "scale-100 animate-fade-in-down opacity-100"
-            : "hidden scale-95 opacity-0"
+          isMobileMenuOpen ? "scale-100 animate-fade-in-down opacity-100" : "hidden scale-95 opacity-0"
         }`}
       >
-        <a
-          href="/home"
-          className="flex justify-center rounded-lg border p-2 text-white hover:text-primary"
-        >
+        <a href="/home" className="flex justify-center rounded-lg border p-2 text-white hover:text-primary">
           Home
         </a>
-        <a
-          href="/home"
-          className="flex justify-center rounded-lg border p-2 text-white hover:text-primary"
-        >
+        <a href="/about-us" className="flex justify-center rounded-lg border p-2 text-white hover:text-primary">
           About
         </a>
-        <a
-          href="/abc"
-          className="flex justify-center rounded-lg border p-2 text-white hover:text-primary"
-        >
+        <a href="/abc" className="flex justify-center rounded-lg border p-2 text-white hover:text-primary">
           abc
         </a>
         <hr className="border-gray-600" />

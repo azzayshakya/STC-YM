@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-
 import { createContext, useEffect, useState } from "react";
 
 export const UserContext = createContext();
+
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     return JSON.parse(localStorage.getItem("stcUser")) || null;
