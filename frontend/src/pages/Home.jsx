@@ -1,10 +1,11 @@
-import LoginMain from "@/auth/login/LoginMain";
+import AssignmentsPage from "./teacher/PostAssignments/PostAssignmentForm";
+import TeacherAssignmentsPage from "./teacher/ViewAssignments/TeacherAssignments";
 
 export default function Home() {
   return (
     <div>
-
-      <LoginMain/>
+      {/* <AssignmentsPage /> */}
+      <TeacherAssignmentsPage/>
     </div>
-  )
-}   
+  );
+}

@@ -1,3 +1,48 @@
+// import PropTypes from "prop-types";
+
+// import { createContext, useEffect, useState } from "react";
+
+// export const UserContext = createContext();
+// export const UserProvider = ({ children }) => {
+//   const [user, setUser] = useState(() => {
+//     return JSON.parse(localStorage.getItem("stcUser")) || null;
+//   });
+
+//   useEffect(() => {
+//     const storedUser = JSON.parse(localStorage.getItem("stcUser"));
+//     const token = localStorage.getItem("stcUserToken");
+//     if (!token || !storedUser) {
+//       const mockUser = {
+//         id: "123",
+//         name: "Ajay Teacher",
+//         role: "teacher",
+//         email: "ajay@example.com",
+//       };
+
+//       setUser(mockUser);
+//       localStorage.setItem("stcUser", JSON.stringify(mockUser));
+//       localStorage.setItem("stcUserToken", "dummy-token");
+//     } else {
+//       setUser(storedUser);
+//     }
+//   }, []);
+
+//   const updateUser = (userData) => {
+//     setUser(userData);
+//     localStorage.setItem("stcUser", JSON.stringify(userData));
+//   };
+
+//   return (
+//     <UserContext.Provider value={{ user, setUser: updateUser }}>
+//       {children}
+//     </UserContext.Provider>
+//   );
+// };
+
+// UserProvider.propTypes = {
+//   children: PropTypes.node.isRequired,
+// };
+
 import PropTypes from "prop-types";
 
 import { createContext, useEffect, useState } from "react";
