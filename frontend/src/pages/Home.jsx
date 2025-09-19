@@ -1,6 +1,10 @@
+import LoginMain from "@/auth/login/LoginMain";
 
 export default function Home() {
   return (
-    <div>Home</div>
+    <div>
+
+      <LoginMain/>
+    </div>
   )
 }   

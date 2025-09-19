@@ -4,6 +4,8 @@ import { ErrorPage } from "../pages/common/ErrorPage";
 import { NotFoundPage } from "../pages/common/NotFoundPage";
 import RedirectPage from "../pages/common/RedirectPage";
 import HomeUILayout from "../layout/Home/HomeLayout";
+import LoginMain from "@/auth/login/LoginMain";
+import CreateAccountMain from "@/auth/create-account/CreateAccountMain";
 
 const router = createBrowserRouter(
   [
@@ -19,6 +21,14 @@ const router = createBrowserRouter(
         {
           path: "/home",
           element: <Home />,
+        },
+        {
+          path: "/login",
+          element: <LoginMain />,
+        },
+        {
+          path: "/create-account",
+          element: <CreateAccountMain />,
         },
        
         {
