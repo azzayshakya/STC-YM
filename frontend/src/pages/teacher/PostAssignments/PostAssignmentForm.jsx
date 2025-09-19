@@ -2,11 +2,9 @@ import { useState, useContext } from "react";
 import { UserContext } from "@/context/user.context";
 import { useCreateAssignmentMutation } from "./useCreateAssignmentMutation";
 import { useDefineAssignmentForm } from "./useDefineAssignment";
-import { useAssignmentsQuery } from "./useAssignmentQuery";
 
-const AssignmentsPage = () => {
+const AssignmentsPageForm = () => {
   const { user } = useContext(UserContext);
-  const { data: assignments, isLoading } = useAssignmentsQuery(user);
   const { form, errors } = useDefineAssignmentForm();
   const { submitAssignmentMutation, isSubmitting } =
     useCreateAssignmentMutation();
@@ -15,18 +13,16 @@ const AssignmentsPage = () => {
 
   const onSubmit = (data) => {
     if (!user) return;
-    submitAssignmentMutation({ ...data, postedBy: user.id });
+    submitAssignmentMutation({ ...data, postedBy: user.STCuserEmail });
     setShowForm(false);
     form.reset();
   };
-
-  if (isLoading) return <p className="text-center">Loading...</p>;
 
   return (
     <div className="mx-auto max-w-2xl p-6 text-white">
       <h2 className="mb-4 text-2xl font-bold">Assignments</h2>
 
-      {user?.role === "teacher" && (
+      {user?.STCuserType === "teacher" && (
         <button
           onClick={() => setShowForm(!showForm)}
           className="mb-4 rounded-lg bg-blue-600 px-4 py-2 hover:bg-blue-700"
@@ -101,30 +97,8 @@ const AssignmentsPage = () => {
           </button>
         </form>
       )}
-
-      <div className="mt-6 space-y-4">
-        {assignments?.length ? (
-          assignments.map((a) => (
-            <div
-              key={a._id}
-              className="rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-md"
-            >
-              <h3 className="text-lg font-bold">{a.title}</h3>
-              <p className="text-sm text-gray-400">{a.description}</p>
-              <p className="text-sm">
-                <strong>Subject:</strong> {a.subject}
-              </p>
-              <p className="text-sm">
-                <strong>Deadline:</strong> {a.deadline}
-              </p>
-            </div>
-          ))
-        ) : (
-          <p>No assignments yet.</p>
-        )}
-      </div>
     </div>
   );
 };
 
-export default AssignmentsPage;
+export default AssignmentsPageForm;

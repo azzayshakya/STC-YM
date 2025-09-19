@@ -4,8 +4,8 @@ import TeacherAssignmentsPage from "./teacher/ViewAssignments/TeacherAssignments
 export default function Home() {
   return (
     <div>
-      {/* <AssignmentsPage /> */}
-      <TeacherAssignmentsPage/>
+      <AssignmentsPage />
+      {/* <TeacherAssignmentsPage/> */}
     </div>
   );
 }

@@ -6,6 +6,8 @@ import RedirectPage from "../pages/common/RedirectPage";
 import HomeUILayout from "../layout/Home/HomeLayout";
 import LoginMain from "@/auth/login/LoginMain";
 import CreateAccountMain from "@/auth/create-account/CreateAccountMain";
+import AssignmentsPage from "@/pages/teacher/PostAssignments/PostAssignmentForm";
+import TeacherAssignments from "@/pages/teacher/TeacherAssignments";
 
 const router = createBrowserRouter(
   [
@@ -29,6 +31,10 @@ const router = createBrowserRouter(
         {
           path: "/create-account",
           element: <CreateAccountMain />,
+        },
+        {
+          path: "/post-assignments",
+          element: <TeacherAssignments />,
         },
        
         {
