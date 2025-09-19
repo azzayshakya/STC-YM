@@ -5,7 +5,7 @@ import { useDefineAssignmentForm } from "./useDefineAssignment";
 import { useAssignmentsQuery } from "./useAssignmentQuery";
 
 const AssignmentsPage = () => {
-  const { user } = useContext(UserContext); 
+  const { user } = useContext(UserContext);
   const { data: assignments, isLoading } = useAssignmentsQuery(user);
   const { form, errors } = useDefineAssignmentForm();
   const { submitAssignmentMutation, isSubmitting } =
@@ -14,7 +14,7 @@ const AssignmentsPage = () => {
   const [showForm, setShowForm] = useState(false);
 
   const onSubmit = (data) => {
-    if (!user) return; // safety check
+    if (!user) return;
     submitAssignmentMutation({ ...data, postedBy: user.id });
     setShowForm(false);
     form.reset();
@@ -23,10 +23,9 @@ const AssignmentsPage = () => {
   if (isLoading) return <p className="text-center">Loading...</p>;
 
   return (
-    <div className="max-w-2xl mx-auto p-6 text-white">
-      <h2 className="text-2xl font-bold mb-4">Assignments</h2>
+    <div className="mx-auto max-w-2xl p-6 text-white">
+      <h2 className="mb-4 text-2xl font-bold">Assignments</h2>
 
-      {/* Teacher button */}
       {user?.role === "teacher" && (
         <button
           onClick={() => setShowForm(!showForm)}
@@ -36,14 +35,13 @@ const AssignmentsPage = () => {
         </button>
       )}
 
-      {/* Assignment Form */}
       {showForm && (
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 bg-gray-800 p-4 rounded-lg shadow-lg"
+          className="space-y-4 rounded-lg bg-gray-800 p-4 shadow-lg"
         >
           <div>
-            <label className="block text-sm mb-1">Title</label>
+            <label className="mb-1 block text-sm">Title</label>
             <input
               type="text"
               {...form.register("title")}
@@ -51,26 +49,26 @@ const AssignmentsPage = () => {
               placeholder="Enter title"
             />
             {errors.title && (
-              <p className="text-red-500 text-sm">{errors.title.message}</p>
+              <p className="text-sm text-red-500">{errors.title.message}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm mb-1">Description</label>
+            <label className="mb-1 block text-sm">Description</label>
             <textarea
               {...form.register("description")}
               className="w-full rounded-lg bg-gray-700 px-3 py-2"
               placeholder="Enter description"
             />
             {errors.description && (
-              <p className="text-red-500 text-sm">
+              <p className="text-sm text-red-500">
                 {errors.description.message}
               </p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm mb-1">Subject</label>
+            <label className="mb-1 block text-sm">Subject</label>
             <input
               type="text"
               {...form.register("subject")}
@@ -78,41 +76,40 @@ const AssignmentsPage = () => {
               placeholder="Enter subject"
             />
             {errors.subject && (
-              <p className="text-red-500 text-sm">{errors.subject.message}</p>
+              <p className="text-sm text-red-500">{errors.subject.message}</p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm mb-1">Deadline</label>
+            <label className="mb-1 block text-sm">Deadline</label>
             <input
               type="date"
               {...form.register("deadline")}
               className="w-full rounded-lg bg-gray-700 px-3 py-2"
             />
             {errors.deadline && (
-              <p className="text-red-500 text-sm">{errors.deadline.message}</p>
+              <p className="text-sm text-red-500">{errors.deadline.message}</p>
             )}
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-green-600 py-2 rounded-lg hover:bg-green-700"
+            className="w-full rounded-lg bg-green-600 py-2 hover:bg-green-700"
           >
             {isSubmitting ? "Posting..." : "Post Assignment"}
           </button>
         </form>
       )}
 
-      {/* Assignment List */}
-      <div className="space-y-4 mt-6">
+      <div className="mt-6 space-y-4">
         {assignments?.length ? (
           assignments.map((a) => (
             <div
               key={a._id}
-              className="bg-gray-800 p-4 rounded-lg shadow-md border border-gray-700"
+              className="rounded-lg border border-gray-700 bg-gray-800 p-4 shadow-md"
             >
-              <h3 className="font-bold text-lg">{a.title}</h3>
+              <h3 className="text-lg font-bold">{a.title}</h3>
               <p className="text-sm text-gray-400">{a.description}</p>
               <p className="text-sm">
                 <strong>Subject:</strong> {a.subject}

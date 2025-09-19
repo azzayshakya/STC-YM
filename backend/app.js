@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
+import assignmentRoutes from "./routes/assignmentRoutes.js";
+
 dotenv.config();
 const app = express();
 connectDB();
@@ -26,5 +28,6 @@ app.get("/", (req, res) => {
   res.send("backend is running");
 });
 app.use("/auth", authRoutes);
+app.use("/assignment", assignmentRoutes);
 
 export default app;
